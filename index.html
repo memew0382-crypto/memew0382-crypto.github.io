@@ -1,3 +1,99 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WebdevFanz · Ruang Karya Siswa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#eef5ff;--sf:#fff;--ink:#0b2447;--mu:#5a6f94;--bl:#1769e0;--bl2:#0a4bb3;--ln:#d3e2fa;--so:#e3eeff;--er:#c62828;--gr:#1b8a3a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#081428;--sf:#0f2140;--ink:#eaf2ff;--mu:#9bb2d6;--bl:#4b93ff;--bl2:#2f78e6;--ln:#1f3a66;--so:#16305a;--er:#ff7a7a;--gr:#5fd47f}}
+:root[data-theme="dark"]{--bg:#081428;--sf:#0f2140;--ink:#eaf2ff;--mu:#9bb2d6;--bl:#4b93ff;--bl2:#2f78e6;--ln:#1f3a66;--so:#16305a;--er:#ff7a7a;--gr:#5fd47f}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+button,input,textarea{font:inherit;color:inherit}.hidden{display:none!important}
+#auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:transparent}
+body::before{content:"";position:fixed;inset:-12px;z-index:-1;background:linear-gradient(color-mix(in srgb,var(--bg) 62%,transparent),color-mix(in srgb,var(--bg) 62%,transparent)),var(--bgimg,url(bg.jpg)) center/cover no-repeat;filter:blur(var(--bgblur,3px))}
+.card{background:var(--sf);width:100%;max-width:400px;border-radius:24px;padding:26px 22px;box-shadow:0 20px 50px rgba(10,50,120,.25)}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.brand img{width:56px;height:56px;border-radius:50%}
+h1{font-size:1.5rem;margin:0;font-weight:800}.sub{color:var(--mu);margin:0 0 16px;font-size:.9rem}
+.tabs{display:flex;background:var(--so);border-radius:14px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;padding:10px;border-radius:11px;font-weight:600;cursor:pointer;color:var(--mu)}
+.tabs button.on{background:var(--sf);color:var(--bl)}
+label{display:block;font-weight:600;font-size:.86rem;margin:0 0 5px}.field{margin-bottom:13px;position:relative}
+input[type=text],input[type=password],textarea{width:100%;border:1.5px solid var(--ln);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:1rem}
+input:focus,textarea:focus{border-color:var(--bl);outline:none}
+.eye{position:absolute;right:6px;top:28px;border:0;background:none;padding:8px;cursor:pointer}
+.btn{position:relative;overflow:hidden;width:100%;border:0;background:var(--bl);color:#fff;font-weight:800;padding:13px;border-radius:14px;cursor:pointer}
+.btn:active{transform:scale(.97)}.btn.sm{width:auto;padding:8px 14px;font-size:.85rem}.btn.gh{background:var(--so);color:var(--bl)}.btn.dg{background:var(--er);color:#fff}
+.msg{min-height:20px;font-size:.86rem;color:var(--er);margin:0 0 8px}.msg.ok{color:var(--gr)}
+.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:r .6s forwards;pointer-events:none}@keyframes r{to{transform:scale(4);opacity:0}}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:10px;padding:10px 14px}
+header img{width:36px;height:36px;border-radius:50%}header .t{flex:1;line-height:1.2}header b{color:var(--bl);font-weight:800}
+.clk{font-size:.74rem;color:var(--mu)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--sf);border-top:1px solid var(--ln)}.mus{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:21;width:48px;height:48px;border-radius:50%;border:0;background:var(--bl);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 16px rgba(10,50,120,.35)}
+nav button{flex:1;border:1.5px solid var(--ln);background:var(--sf);padding:10px 2px;border-radius:12px;font-weight:600;font-size:.78rem;cursor:pointer;color:var(--mu)}
+nav button.on{background:var(--bl);border-color:var(--bl);color:#fff}
+main{max-width:900px;margin:0 auto;padding:14px 14px 150px}
+.pn{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:18px;margin-bottom:14px}.pn h2{margin:0 0 4px;font-size:1.15rem}
+.drop{border:2px dashed var(--bl);background:var(--so);border-radius:16px;padding:22px 12px;text-align:center;cursor:pointer;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.it{background:var(--bg);border:1px solid var(--ln);border-radius:14px;overflow:hidden;font-size:.78rem}
+.it img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.it div{padding:7px 9px;color:var(--mu)}
+.wk{background:var(--sf);border:1px solid var(--ln);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.wk img.m{width:100%;max-height:320px;object-fit:cover;display:block}.bd{padding:13px 15px}.bd h3{margin:0 0 5px}.bd p{margin:0 0 9px;white-space:pre-wrap;line-height:1.5}
+.mt{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--mu);gap:6px;flex-wrap:wrap}
+.lk{border:1.5px solid var(--ln);background:var(--bg);border-radius:20px;padding:5px 11px;cursor:pointer}.lk.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+.pv{width:100%;max-height:260px;object-fit:cover;border-radius:14px;margin-bottom:10px}.tb{display:flex;gap:8px}
+.em{text-align:center;color:var(--mu);padding:20px}
+.st{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.sc{background:var(--so);border-radius:14px;padding:12px}.sc b{font-size:1.5rem;display:block;color:var(--bl)}.sc span{font-size:.78rem;color:var(--mu)}
+.row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--ln);font-size:.85rem;flex-wrap:wrap}.row .n{flex:1;min-width:130px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--mu);display:inline-block;margin-right:5px}.dot.on{background:var(--gr)}
+.lg{font-size:.78rem;color:var(--mu);padding:5px 0;border-bottom:1px dashed var(--ln)}
+:focus-visible{outline:3px solid var(--bl);outline-offset:2px}
+.dev{min-height:calc(100vh - 230px);border-radius:20px;background:linear-gradient(transparent 45%,rgba(0,0,0,.65)),url(dev.jpg) center top/cover no-repeat;display:flex;align-items:flex-end;padding:14px;overflow:hidden}.dv{width:100%;background:rgba(8,20,40,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:14px 16px;color:#fff}.dv small{display:block;opacity:.75;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;margin-bottom:4px}.dv b{display:block;font-size:1.25rem;line-height:1.5}
+nav{overflow-x:auto}nav button{flex:1 0 auto;white-space:nowrap;padding:10px 12px}.chat{max-height:48vh;min-height:160px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 0}.bm{max-width:85%;padding:9px 12px;border-radius:14px;line-height:1.45;white-space:pre-wrap;font-size:.92rem}.bm.b{background:var(--so);align-self:flex-start}.bm.u{background:var(--bl);color:#fff;align-self:flex-end}
+#intro{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 40%,#0a4bb3,#050d1f);display:grid;place-items:center;padding:24px;overflow:hidden}#il{text-align:center;color:#fff;font-weight:800;font-size:clamp(1.7rem,8vw,3.2rem);line-height:1.3;max-width:92vw;text-shadow:0 4px 24px rgba(0,0,0,.4)}#il .w{display:inline-block;white-space:nowrap}#il .c{display:inline-block;will-change:transform,opacity}#isk{position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top,0px));background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:20px;padding:8px 14px;cursor:pointer}
+#iv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ish{position:absolute;inset:0;background:rgba(0,0,0,.38)}#il{position:relative;z-index:2}#isk{z-index:3}
+</style></head><body>
+<section id="auth"><div class="card" id="ac">
+<div class="brand"><img src="logo.png" alt="Logo MTs Negeri 1 Lebak"><div><h1>WebdevFanz</h1><div class="sub" style="margin:0">Ruang Karya Siswa</div></div></div>
+<p class="sub">Madrasah Tsanawiyah Negeri 1 Lebak</p>
+<div class="tabs"><button id="tL" class="on" type="button">Masuk</button><button id="tS" type="button">Daftar</button></div>
+<div class="field hidden" id="nf"><label for="fn">Nama lengkap</label><input type="text" id="fn" autocomplete="name" maxlength="40"></div>
+<div class="field"><label for="un">Username</label><input type="text" id="un" autocomplete="username" autocapitalize="none" maxlength="20"></div>
+<div class="field"><label for="pw">Kata sandi</label><input type="password" id="pw" autocomplete="current-password" maxlength="64" placeholder="Minimal 8 karakter"><button class="eye" id="eye" type="button" aria-label="Tampilkan kata sandi">👁️</button></div>
+<p class="msg" id="am" role="alert"></p>
+<button class="btn" id="ab" type="button">Masuk</button>
+<p class="clk" id="clk0" style="text-align:center;margin:14px 0 0"></p>
+</div></section>
+
+<div id="intro" class="hidden" aria-live="polite"><video id="iv" src="intro.mp4" playsinline preload="auto"></video><div class="ish"></div><div id="il"></div><button id="isk" type="button">Lewati ›</button></div>
+<section id="app" class="hidden">
+<header><img src="logo.png" alt=""><div class="t"><b>WebdevFanz</b><div class="clk" id="clk"></div></div><span class="clk" id="who"></span><button class="btn gh sm" id="out" type="button">Keluar</button></header>
+<nav><button data-t="g" class="on" type="button">📷 Galeri</button><button data-t="w" type="button">🌟 Karya</button><button data-t="d" type="button">💻 Developer</button><button data-t="i" type="button">🤖 AI FAN</button><button data-t="l" type="button">🎨 Latar</button><button data-t="a" id="navA" class="hidden" type="button">🛡️ Admin</button></nav>
+<main>
+<div id="t-g"><div class="pn"><h2>Unggah foto</h2><div class="sub" style="margin:0">Foto yang kamu unggah bisa dilihat semua anggota.</div>
+<div class="drop" id="dr" tabindex="0" role="button"><div style="font-size:2rem">🖼️</div><b>Pilih foto</b><p class="sub" style="margin:4px 0 0">JPG, PNG, atau WEBP</p></div>
+<input type="file" id="f1" accept="image/jpeg,image/png,image/webp" multiple hidden><p class="msg" id="pm"></p></div>
+<div class="pn"><h2>Galeri bersama</h2><div class="grid" id="gal"></div></div></div>
+<div class="hidden" id="t-w"><div class="pn"><h2>Bagikan karya atau ide</h2>
+<div class="field" style="margin-top:10px"><label for="wt">Judul</label><input type="text" id="wt" maxlength="80"></div>
+<div class="field"><label for="wx">Ide / deskripsi</label><textarea id="wx" rows="4" maxlength="800"></textarea></div>
+<img class="pv hidden" id="wp" alt="Pratinjau"><div class="tb"><button class="btn gh" id="wk" type="button">📷 Foto</button><button class="btn" id="wo" type="button">Kirim karya</button></div>
+<input type="file" id="f2" accept="image/jpeg,image/png,image/webp" hidden><p class="msg" id="wm"></p></div><div id="wl"></div></div>
+<div class="hidden" id="t-d"><div class="dev"><div class="dv"><small>Developer</small><b>Fanzielowner</b><b>mtsclass8F</b></div></div></div>
+<div class="hidden" id="t-i"><div class="pn"><h2>🤖 AI FAN</h2><div class="sub" style="margin:0 0 10px">Asisten untuk ide karya, tugas, dan cara memakai situs.</div><div class="chat" id="chat"></div><div class="tb" style="margin-top:10px"><input type="text" id="ci" maxlength="400" placeholder="Tanya AI FAN..." style="flex:1"><button class="btn sm" id="cs" type="button">Kirim</button></div></div></div>
+<div class="hidden" id="t-l"><div class="pn"><h2>🎨 Ganti latar belakang</h2><div class="sub" style="margin:0 0 12px">Pilihan tersimpan di perangkat ini.</div>
+<div class="tb" style="flex-wrap:wrap"><button class="btn gh sm" data-bg="mts" type="button">🏫 MTs (asli)</button><button class="btn gh sm" data-bg="biru" type="button">🔵 Biru</button><button class="btn gh sm" data-bg="gelap" type="button">🌙 Gelap</button><button class="btn sm" id="bgu" type="button">📷 Foto sendiri</button></div>
+<div class="field" style="margin-top:14px"><label for="bgb">Tingkat blur</label><input type="range" id="bgb" min="0" max="10" value="3" style="width:100%"></div><input type="file" id="bgf" accept="image/jpeg,image/png,image/webp" hidden></div></div>
+<div class="hidden" id="t-a"><div class="st" id="stt"></div>
+<div class="pn"><h2>🟢 Sedang online</h2><div id="onl"></div></div>
+<div class="pn"><h2>👥 Daftar akun</h2><div id="usr"></div></div>
+<div class="pn"><h2>📜 Aktivitas jaringan</h2><div id="lgs"></div></div></div>
+</main><button class="mus" id="mus" type="button" aria-label="Putar musik">🎵</button><audio id="aud" src="stereo-love.mp3" loop preload="none"></audio></section>
+
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -18,14 +114,17 @@ function tick(){const s=wib(new Date(),1);$('clk').textContent=s;$('clk0').textC
 const ls={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 
 let mode='login',me=null,subs=[],data={users:[],photos:[],works:[],pres:[],logs:[]},idle=null,hb=null;
-let intro = false; // Variabel intro dideklarasikan agar tidak error
+let intro=false;
 
-// Fungsi contoh untuk playIntro jika diperlukan
-function playIntro() {
-  const introEl = $('intro');
-  if (introEl) introEl.classList.remove('hidden');
-  const vid = $('iv');
-  if (vid) vid.play().catch(() => {});
+function playIntro(){
+  const introEl=$('intro');
+  if(introEl)introEl.classList.remove('hidden');
+  const vid=$('iv');
+  if(vid)vid.play().catch(()=>{});
+}
+
+function draw(){
+  // Fungsi penampung untuk merender data UI galeri/karya
 }
 
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),d=document.createElement('span');d.className='rp';d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(d);setTimeout(()=>d.remove(),650)});
@@ -66,7 +165,13 @@ if(ready)onAuthStateChanged(auth,async usr=>{
  enter({uid:usr.uid,u:d.data().u,name:d.data().name,admin:false});
 });
 
-function sub(col,key,ord,lim){const q=query(collection(db,col),...(ord?[orderBy(ord,'desc'),limit(lim)]:[[]));subs.push(onSnapshot(q,s=>{data[key]=s.docs.map(d=>Object.assign({id:d.id},d.data()));draw()},()=>{}))}
+function sub(col,key,ord,lim){
+  const q = ord ? query(collection(db, col), orderBy(ord, 'desc'), limit(lim)) : query(collection(db, col));
+  subs.push(onSnapshot(q, s => {
+    data[key] = s.docs.map(d => Object.assign({id: d.id}, d.data()));
+    if(typeof draw === 'function') draw();
+  }, () => {}));
+}
 
 function enter(m){
  if(me&&me.uid===m.uid)return;cleanup();me=m;$('pw').value='';
@@ -92,16 +197,4 @@ $('tS').onclick=()=>setMode('signup');
 $('ab').onclick=submit;
 $('ac').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
 $('eye').onclick=()=>{const p=$('pw'),s=p.type==='password';p.type=s?'text':'password';$('eye').textContent=s?'🙈':'👁️'};
-$('out').onclick=out;
-
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
-  ['g','w','d','i','l','a'].forEach(t=>$('t-'+t).classList.toggle('hidden',b.dataset.t!==t));
-});
-
-// Pesan jika Firebase belum dikonfigurasi (dengan tanda kutip penutup yang benar)
-if(!ready){
-  $('am').textContent='Firebase belum diisi. Baca README.md.';
-}
-                </script>
-                
+$('out')
