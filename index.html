@@ -1,0 +1,107 @@
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,orderBy,limit,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ====== ISI DENGAN KONFIGURASI FIREBASE KAMU ====== */
+const CFG={apiKey:"ISI_API_KEY",authDomain:"ISI.firebaseapp.com",projectId:"ISI",appId:"ISI"};
+/* ================================================= */
+const ADMIN_USER='webdevfanz',DOM='@webdevfanz.app',ADMIN_EMAIL=ADMIN_USER+DOM;
+const ready=!CFG.apiKey.startsWith('ISI');
+let auth,db;if(ready){const app=initializeApp(CFG);auth=getAuth(app);db=getFirestore(app)}
+
+const $=i=>document.getElementById(i);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const WIB='Asia/Jakarta';
+function wib(t,full){return new Intl.DateTimeFormat('id-ID',full?{timeZone:WIB,weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}:{timeZone:WIB,day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(t)+(full?' WIB':'')}
+function tick(){const s=wib(new Date(),1);$('clk').textContent=s;$('clk0').textContent=s}setInterval(tick,1000);tick();
+const ls={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+let mode='login',me=null,subs=[],data={users:[],photos:[],works:[],pres:[],logs:[]},idle=null,hb=null;
+let intro = false; // Variabel intro dideklarasikan agar tidak error
+
+// Fungsi contoh untuk playIntro jika diperlukan
+function playIntro() {
+  const introEl = $('intro');
+  if (introEl) introEl.classList.remove('hidden');
+  const vid = $('iv');
+  if (vid) vid.play().catch(() => {});
+}
+
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),d=document.createElement('span');d.className='rp';d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(d);setTimeout(()=>d.remove(),650)});
+
+function setMode(m){mode=m;$('tL').classList.toggle('on',m==='login');$('tS').classList.toggle('on',m==='signup');$('nf').classList.toggle('hidden',m==='login');$('ab').firstChild.nodeValue=m==='login'?'Masuk':'Buat akun';$('pw').autocomplete=m==='login'?'current-password':'new-password';$('am').textContent=''}
+function aerr(t){$('am').className='msg';$('am').textContent=t}
+function lockFail(){const lk=JSON.parse(ls.g('wdf_lock')||'{"n":0}'),c=lk.n+1;ls.s('wdf_lock',JSON.stringify({n:c,until:c>=5?Date.now()+60000*Math.min(c-4,10):0}))}
+async function submit(){
+ const u=$('un').value.trim().toLowerCase(),p=$('pw').value,n=$('fn').value.trim().replace(/\s+/g,' ');
+ if(!ready)return aerr('Firebase belum diisi. Baca README.md.');
+ if(!/^[a-z0-9_.]{3,20}$/.test(u))return aerr('Username 3–20 karakter: huruf, angka, titik, atau _.');
+ if(!p)return aerr('Isi kata sandi.');
+ const lk=JSON.parse(ls.g('wdf_lock')||'{"n":0,"until":0}');
+ if(Date.now()<(lk.until||0))return aerr('Terlalu banyak percobaan. Coba lagi dalam '+Math.ceil((lk.until-Date.now())/1000)+' detik.');
+ $('ab').disabled=true;
+ try{
+  if(mode==='signup'){
+   if(u===ADMIN_USER)return aerr('Username sudah dipakai.');
+   if(n.length<3)return aerr('Isi nama lengkap (min. 3 huruf).');
+   if(p.length<8||!/[a-zA-Z]/.test(p)||!/\d/.test(p))return aerr('Kata sandi minimal 8 karakter, berisi huruf dan angka.');
+   intro=true;const c=await createUserWithEmailAndPassword(auth,u+DOM,p);
+   await setDoc(doc(db,'users',c.user.uid),{u,name:n,banned:false,at:Date.now()});
+  }else await signInWithEmailAndPassword(auth,u+DOM,p);
+  ls.s('wdf_lock','{"n":0,"until":0}');
+ }catch(e){intro=false;const c=e.code||'';
+  if(c==='auth/email-already-in-use')aerr('Username sudah dipakai.');
+  else if(c==='auth/too-many-requests')aerr('Terlalu banyak percobaan. Tunggu beberapa menit.');
+  else if(c==='auth/network-request-failed')aerr('Koneksi internet bermasalah.');
+  else{if(mode==='login')lockFail();aerr('Username atau kata sandi salah.')}
+ }finally{$('ab').disabled=false}
+}
+
+if(ready)onAuthStateChanged(auth,async usr=>{
+ if(!usr){cleanup();return}
+ if(usr.email===ADMIN_EMAIL)return enter({uid:usr.uid,u:'admin',name:'Admin',admin:true});
+ let d=null;for(let i=0;i<6&&!(d&&d.exists());i++){try{d=await getDoc(doc(db,'users',usr.uid))}catch(e){}if(!(d&&d.exists()))await new Promise(r=>setTimeout(r,500))}
+ if(!d||!d.exists()||d.data().banned){await signOut(auth);aerr('Akun tidak aktif atau diblokir admin.');return}
+ enter({uid:usr.uid,u:d.data().u,name:d.data().name,admin:false});
+});
+
+function sub(col,key,ord,lim){const q=query(collection(db,col),...(ord?[orderBy(ord,'desc'),limit(lim)]:[[]));subs.push(onSnapshot(q,s=>{data[key]=s.docs.map(d=>Object.assign({id:d.id},d.data()));draw()},()=>{}))}
+
+function enter(m){
+ if(me&&me.uid===m.uid)return;cleanup();me=m;$('pw').value='';
+ $('auth').classList.add('hidden');$('app').classList.remove('hidden');
+ $('who').textContent=m.admin?'👑 Admin':m.name.split(' ')[0];$('navA').classList.toggle('hidden',!m.admin);
+ sub('photos','photos','at',60);sub('works','works','at',40);
+ if(m.admin){sub('users','users');sub('presence','pres');sub('logs','logs','t',40)}
+ else{subs.push(onSnapshot(doc(db,'users',m.uid),s=>{if(!s.exists()||s.data().banned){alert('Akun kamu diblokir atau dihapus admin.');out()}},()=>{}));beat();hb=setInterval(beat,30000)}
+ log(m.admin?'admin':m.u,'masuk');bump();window.scrollTo(0,0);
+ if(intro){intro=false;playIntro();}
+}
+
+function cleanup(){subs.forEach(f=>f());subs=[];clearInterval(hb);clearTimeout(idle);me=null;$('app').classList.add('hidden');$('auth').classList.remove('hidden');setMode('login')}
+function log(u,act){if(db&&me)addDoc(collection(db,'logs'),{u,act,t:Date.now()}).catch(()=>{})}
+function beat(){if(me&&!me.admin)setDoc(doc(db,'presence',me.uid),{name:me.name,ts:Date.now()}).catch(()=>{})}
+async function out(){if(me&&!me.admin)await deleteDoc(doc(db,'presence',me.uid)).catch(()=>{});else log('admin','keluar');await signOut(auth)}
+function bump(){clearTimeout(idle);idle=setTimeout(()=>{if(me){alert('Sesi berakhir karena tidak aktif 30 menit.');out()}},1800000)}
+
+['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(me)bump()},{passive:true}));
+
+$('tL').onclick=()=>setMode('login');
+$('tS').onclick=()=>setMode('signup');
+$('ab').onclick=submit;
+$('ac').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+$('eye').onclick=()=>{const p=$('pw'),s=p.type==='password';p.type=s?'text':'password';$('eye').textContent=s?'🙈':'👁️'};
+$('out').onclick=out;
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  ['g','w','d','i','l','a'].forEach(t=>$('t-'+t).classList.toggle('hidden',b.dataset.t!==t));
+});
+
+// Pesan jika Firebase belum dikonfigurasi (dengan tanda kutip penutup yang benar)
+if(!ready){
+  $('am').textContent='Firebase belum diisi. Baca README.md.';
+}
+                </script>
+                
