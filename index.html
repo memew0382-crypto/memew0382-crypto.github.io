@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="utf-8">
+<html lang="id">
+<head>
+<meta charset="utf-8">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>WebdevFanz · Ruang Karya Siswa</title>
@@ -56,43 +58,162 @@ main{max-width:900px;margin:0 auto;padding:14px 14px 150px}
 nav{overflow-x:auto}nav button{flex:1 0 auto;white-space:nowrap;padding:10px 12px}.chat{max-height:48vh;min-height:160px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px 0}.bm{max-width:85%;padding:9px 12px;border-radius:14px;line-height:1.45;white-space:pre-wrap;font-size:.92rem}.bm.b{background:var(--so);align-self:flex-start}.bm.u{background:var(--bl);color:#fff;align-self:flex-end}
 #intro{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 40%,#0a4bb3,#050d1f);display:grid;place-items:center;padding:24px;overflow:hidden}#il{text-align:center;color:#fff;font-weight:800;font-size:clamp(1.7rem,8vw,3.2rem);line-height:1.3;max-width:92vw;text-shadow:0 4px 24px rgba(0,0,0,.4)}#il .w{display:inline-block;white-space:nowrap}#il .c{display:inline-block;will-change:transform,opacity}#isk{position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top,0px));background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:20px;padding:8px 14px;cursor:pointer}
 #iv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ish{position:absolute;inset:0;background:rgba(0,0,0,.38)}#il{position:relative;z-index:2}#isk{z-index:3}
-</style></head><body>
-<section id="auth"><div class="card" id="ac">
-<div class="brand"><img src="logo.png" alt="Logo MTs Negeri 1 Lebak"><div><h1>WebdevFanz</h1><div class="sub" style="margin:0">Ruang Karya Siswa</div></div></div>
-<p class="sub">Madrasah Tsanawiyah Negeri 1 Lebak</p>
-<div class="tabs"><button id="tL" class="on" type="button">Masuk</button><button id="tS" type="button">Daftar</button></div>
-<div class="field hidden" id="nf"><label for="fn">Nama lengkap</label><input type="text" id="fn" autocomplete="name" maxlength="40"></div>
-<div class="field"><label for="un">Username</label><input type="text" id="un" autocomplete="username" autocapitalize="none" maxlength="20"></div>
-<div class="field"><label for="pw">Kata sandi</label><input type="password" id="pw" autocomplete="current-password" maxlength="64" placeholder="Minimal 8 karakter"><button class="eye" id="eye" type="button" aria-label="Tampilkan kata sandi">👁️</button></div>
-<p class="msg" id="am" role="alert"></p>
-<button class="btn" id="ab" type="button">Masuk</button>
-<p class="clk" id="clk0" style="text-align:center;margin:14px 0 0"></p>
-</div></section>
+</style>
+</head>
+<body>
+<section id="auth">
+  <div class="card" id="ac">
+    <div class="brand">
+      <img src="logo.png" alt="Logo MTs Negeri 1 Lebak">
+      <div>
+        <h1>WebdevFanz</h1>
+        <div class="sub" style="margin:0">Ruang Karya Siswa</div>
+      </div>
+    </div>
+    <p class="sub">Madrasah Tsanawiyah Negeri 1 Lebak</p>
+    <div class="tabs">
+      <button id="tL" class="on" type="button">Masuk</button>
+      <button id="tS" type="button">Daftar</button>
+    </div>
+    <div class="field hidden" id="nf">
+      <label for="fn">Nama lengkap</label>
+      <input type="text" id="fn" autocomplete="name" maxlength="40">
+    </div>
+    <div class="field">
+      <label for="un">Username</label>
+      <input type="text" id="un" autocomplete="username" autocapitalize="none" maxlength="20">
+    </div>
+    <div class="field">
+      <label for="pw">Kata sandi</label>
+      <input type="password" id="pw" autocomplete="current-password" maxlength="64" placeholder="Minimal 8 karakter">
+      <button class="eye" id="eye" type="button" aria-label="Tampilkan kata sandi">👁️</button>
+    </div>
+    <p class="msg" id="am" role="alert"></p>
+    <button class="btn" id="ab" type="button">Masuk</button>
+    <p class="clk" id="clk0" style="text-align:center;margin:14px 0 0"></p>
+  </div>
+</section>
 
-<div id="intro" class="hidden" aria-live="polite"><video id="iv" src="intro.mp4" playsinline preload="auto"></video><div class="ish"></div><div id="il"></div><button id="isk" type="button">Lewati ›</button></div>
+<div id="intro" class="hidden" aria-live="polite">
+  <video id="iv" src="intro.mp4" playsinline preload="auto"></video>
+  <div class="ish"></div>
+  <div id="il"></div>
+  <button id="isk" type="button">Lewati ›</button>
+</div>
+
 <section id="app" class="hidden">
-<header><img src="logo.png" alt=""><div class="t"><b>WebdevFanz</b><div class="clk" id="clk"></div></div><span class="clk" id="who"></span><button class="btn gh sm" id="out" type="button">Keluar</button></header>
-<nav><button data-t="g" class="on" type="button">📷 Galeri</button><button data-t="w" type="button">🌟 Karya</button><button data-t="d" type="button">💻 Developer</button><button data-t="i" type="button">🤖 AI FAN</button><button data-t="l" type="button">🎨 Latar</button><button data-t="a" id="navA" class="hidden" type="button">🛡️ Admin</button></nav>
-<main>
-<div id="t-g"><div class="pn"><h2>Unggah foto</h2><div class="sub" style="margin:0">Foto yang kamu unggah bisa dilihat semua anggota.</div>
-<div class="drop" id="dr" tabindex="0" role="button"><div style="font-size:2rem">🖼️</div><b>Pilih foto</b><p class="sub" style="margin:4px 0 0">JPG, PNG, atau WEBP</p></div>
-<input type="file" id="f1" accept="image/jpeg,image/png,image/webp" multiple hidden><p class="msg" id="pm"></p></div>
-<div class="pn"><h2>Galeri bersama</h2><div class="grid" id="gal"></div></div></div>
-<div class="hidden" id="t-w"><div class="pn"><h2>Bagikan karya atau ide</h2>
-<div class="field" style="margin-top:10px"><label for="wt">Judul</label><input type="text" id="wt" maxlength="80"></div>
-<div class="field"><label for="wx">Ide / deskripsi</label><textarea id="wx" rows="4" maxlength="800"></textarea></div>
-<img class="pv hidden" id="wp" alt="Pratinjau"><div class="tb"><button class="btn gh" id="wk" type="button">📷 Foto</button><button class="btn" id="wo" type="button">Kirim karya</button></div>
-<input type="file" id="f2" accept="image/jpeg,image/png,image/webp" hidden><p class="msg" id="wm"></p></div><div id="wl"></div></div>
-<div class="hidden" id="t-d"><div class="dev"><div class="dv"><small>Developer</small><b>Fanzielowner</b><b>mtsclass8F</b></div></div></div>
-<div class="hidden" id="t-i"><div class="pn"><h2>🤖 AI FAN</h2><div class="sub" style="margin:0 0 10px">Asisten untuk ide karya, tugas, dan cara memakai situs.</div><div class="chat" id="chat"></div><div class="tb" style="margin-top:10px"><input type="text" id="ci" maxlength="400" placeholder="Tanya AI FAN..." style="flex:1"><button class="btn sm" id="cs" type="button">Kirim</button></div></div></div>
-<div class="hidden" id="t-l"><div class="pn"><h2>🎨 Ganti latar belakang</h2><div class="sub" style="margin:0 0 12px">Pilihan tersimpan di perangkat ini.</div>
-<div class="tb" style="flex-wrap:wrap"><button class="btn gh sm" data-bg="mts" type="button">🏫 MTs (asli)</button><button class="btn gh sm" data-bg="biru" type="button">🔵 Biru</button><button class="btn gh sm" data-bg="gelap" type="button">🌙 Gelap</button><button class="btn sm" id="bgu" type="button">📷 Foto sendiri</button></div>
-<div class="field" style="margin-top:14px"><label for="bgb">Tingkat blur</label><input type="range" id="bgb" min="0" max="10" value="3" style="width:100%"></div><input type="file" id="bgf" accept="image/jpeg,image/png,image/webp" hidden></div></div>
-<div class="hidden" id="t-a"><div class="st" id="stt"></div>
-<div class="pn"><h2>🟢 Sedang online</h2><div id="onl"></div></div>
-<div class="pn"><h2>👥 Daftar akun</h2><div id="usr"></div></div>
-<div class="pn"><h2>📜 Aktivitas jaringan</h2><div id="lgs"></div></div></div>
-</main><button class="mus" id="mus" type="button" aria-label="Putar musik">🎵</button><audio id="aud" src="stereo-love.mp3" loop preload="none"></audio></section>
+  <header>
+    <img src="logo.png" alt="">
+    <div class="t">
+      <b>WebdevFanz</b>
+      <div class="clk" id="clk"></div>
+    </div>
+    <span class="clk" id="who"></span>
+    <button class="btn gh sm" id="out" type="button">Keluar</button>
+  </header>
+  <nav>
+    <button data-t="g" class="on" type="button">📷 Galeri</button>
+    <button data-t="w" type="button">🌟 Karya</button>
+    <button data-t="d" type="button">💻 Developer</button>
+    <button data-t="i" type="button">🤖 AI FAN</button>
+    <button data-t="l" type="button">🎨 Latar</button>
+    <button data-t="a" id="navA" class="hidden" type="button">🛡️ Admin</button>
+  </nav>
+  <main>
+    <div id="t-g">
+      <div class="pn">
+        <h2>Unggah foto</h2>
+        <div class="sub" style="margin:0">Foto yang kamu unggah bisa dilihat semua anggota.</div>
+        <div class="drop" id="dr" tabindex="0" role="button">
+          <div style="font-size:2rem">🖼️</div>
+          <b>Pilih foto</b>
+          <p class="sub" style="margin:4px 0 0">JPG, PNG, atau WEBP</p>
+        </div>
+        <input type="file" id="f1" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <p class="msg" id="pm"></p>
+      </div>
+      <div class="pn">
+        <h2>Galeri bersama</h2>
+        <div class="grid" id="gal"></div>
+      </div>
+    </div>
+    <div class="hidden" id="t-w">
+      <div class="pn">
+        <h2>Bagikan karya atau ide</h2>
+        <div class="field" style="margin-top:10px">
+          <label for="wt">Judul</label>
+          <input type="text" id="wt" maxlength="80">
+        </div>
+        <div class="field">
+          <label for="wx">Ide / deskripsi</label>
+          <textarea id="wx" rows="4" maxlength="800"></textarea>
+        </div>
+        <img class="pv hidden" id="wp" alt="Pratinjau">
+        <div class="tb">
+          <button class="btn gh" id="wk" type="button">📷 Foto</button>
+          <button class="btn" id="wo" type="button">Kirim karya</button>
+        </div>
+        <input type="file" id="f2" accept="image/jpeg,image/png,image/webp" hidden>
+        <p class="msg" id="wm"></p>
+      </div>
+      <div id="wl"></div>
+    </div>
+    <div class="hidden" id="t-d">
+      <div class="dev">
+        <div class="dv">
+          <small>Developer</small>
+          <b>Fanzielowner</b>
+          <b>mtsclass8F</b>
+        </div>
+      </div>
+    </div>
+    <div class="hidden" id="t-i">
+      <div class="pn">
+        <h2>🤖 AI FAN</h2>
+        <div class="sub" style="margin:0 0 10px">Asisten untuk ide karya, tugas, dan cara memakai situs.</div>
+        <div class="chat" id="chat"></div>
+        <div class="tb" style="margin-top:10px">
+          <input type="text" id="ci" maxlength="400" placeholder="Tanya AI FAN..." style="flex:1">
+          <button class="btn sm" id="cs" type="button">Kirim</button>
+        </div>
+      </div>
+    </div>
+    <div class="hidden" id="t-l">
+      <div class="pn">
+        <h2>🎨 Ganti latar belakang</h2>
+        <div class="sub" style="margin:0 0 12px">Pilihan tersimpan di perangkat ini.</div>
+        <div class="tb" style="flex-wrap:wrap">
+          <button class="btn gh sm" data-bg="mts" type="button">🏫 MTs (asli)</button>
+          <button class="btn gh sm" data-bg="biru" type="button">🔵 Biru</button>
+          <button class="btn gh sm" data-bg="gelap" type="button">🌙 Gelap</button>
+          <button class="btn sm" id="bgu" type="button">📷 Foto sendiri</button>
+        </div>
+        <div class="field" style="margin-top:14px">
+          <label for="bgb">Tingkat blur</label>
+          <input type="range" id="bgb" min="0" max="10" value="3" style="width:100%">
+        </div>
+        <input type="file" id="bgf" accept="image/jpeg,image/png,image/webp" hidden>
+      </div>
+    </div>
+    <div class="hidden" id="t-a">
+      <div class="st" id="stt"></div>
+      <div class="pn">
+        <h2>🟢 Sedang online</h2>
+        <div id="onl"></div>
+      </div>
+      <div class="pn">
+        <h2>👥 Daftar akun</h2>
+        <div id="usr"></div>
+      </div>
+      <div class="pn">
+        <h2>📜 Aktivitas jaringan</h2>
+        <div id="lgs"></div>
+      </div>
+    </div>
+  </main>
+  <button class="mus" id="mus" type="button" aria-label="Putar musik">🎵</button>
+  <audio id="aud" src="stereo-love.mp3" loop preload="none"></audio>
+</section>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -124,7 +245,7 @@ function playIntro(){
 }
 
 function draw(){
-  // Fungsi penampung untuk merender data UI galeri/karya
+  // Fungsi penampung render data UI
 }
 
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),d=document.createElement('span');d.className='rp';d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(d);setTimeout(()=>d.remove(),650)});
@@ -184,17 +305,4 @@ function enter(m){
  if(intro){intro=false;playIntro();}
 }
 
-function cleanup(){subs.forEach(f=>f());subs=[];clearInterval(hb);clearTimeout(idle);me=null;$('app').classList.add('hidden');$('auth').classList.remove('hidden');setMode('login')}
-function log(u,act){if(db&&me)addDoc(collection(db,'logs'),{u,act,t:Date.now()}).catch(()=>{})}
-function beat(){if(me&&!me.admin)setDoc(doc(db,'presence',me.uid),{name:me.name,ts:Date.now()}).catch(()=>{})}
-async function out(){if(me&&!me.admin)await deleteDoc(doc(db,'presence',me.uid)).catch(()=>{});else log('admin','keluar');await signOut(auth)}
-function bump(){clearTimeout(idle);idle=setTimeout(()=>{if(me){alert('Sesi berakhir karena tidak aktif 30 menit.');out()}},1800000)}
-
-['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(me)bump()},{passive:true}));
-
-$('tL').onclick=()=>setMode('login');
-$('tS').onclick=()=>setMode('signup');
-$('ab').onclick=submit;
-$('ac').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
-$('eye').onclick=()=>{const p=$('pw'),s=p.type==='password';p.type=s?'text':'password';$('eye').textContent=s?'🙈':'👁️'};
-$('out')
+function cleanup(){subs.forEach(f=>f());subs=[];clearInterval(hb);clearTimeout(
